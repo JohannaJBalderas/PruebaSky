@@ -1,0 +1,211 @@
+<html>
+  <head>
+   <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="js/animation-mixer.js"> </script>
+    <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script>
+    
+    <script src="https://unpkg.com/aframe-layout-component@5.3.0/dist/aframe-layout-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-template-component@3.2.1/dist/aframe-template-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-proxy-event-component@2.1.0/dist/aframe-proxy-event-component.min.js"></script>
+    <script>
+		AFRAME.registerComponent('play-pause', {
+			init: function () {
+				var myVideo = document.querySelector('#pionero');
+				var videoControls = document.querySelector('#videoControls');
+				this.el.addEventListener('click', function () {
+					if (myVideo.paused) {
+						myVideo.play();
+						videoControls.setAttribute('src', '#pause');
+					} else {
+						myVideo.pause();
+						videoControls.setAttribute('src', '#play');
+					}
+				});
+			}
+		});
+	</script>
+  </head>
+  <body>
+      <a-scene inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
+        <!--ASSETS IMAGENES-->
+        <a-asset>
+           <!--ASSETS IMAGENES-->
+            <!--ESCENARIO-->
+            <img src="img/pared3.jpg" id="pared3">
+            <img src="img/madera1.jpg" id="piso4">
+            <!--BOTONES-->
+            <img src="img/btn-video.png" id="play">
+            <img src="img/btn_pause.png" id="pause">
+            <img src="img/btn-violentometro.png" id="btnViolentometro">
+            <img src="img/btn-victima.png" id="btnVictima">
+            <img src="img/btn-complice.png" id="btnComplice">
+            <img src="img/btn-agresor.png" id="btnAgresor">
+            <img src="img/btn-tips.png" id="btnTips">
+            <!--INFOGRAFIAS & TIPS-->
+            <img src="img/victima.jpg" id="victima">
+            <img src="img/complice.jpg" id="complice">
+            <img src="img/agresor.jpg" id="agresor">
+            <img src="img/autocuidado.png" id="autocuidado">
+            <!--TITULOS-->
+            <img src="img/tittle_1.png" id="titulo">
+           <!--ASSETS VIDEOS-->
+            <video src="video/pionero.mp4" id="pionero" loop="true"></video>
+           <!--ASSETS MODELOS 3D-->
+            <a-asset-item src="3D/viol1.glb" id="viol"></a-asset-item>
+            <a-asset-item src="3D/viol2.glb" id="text"></a-asset-item>
+        </a-asset>
+        
+        <!--CAMARA-->
+        <a-entity position="0 4 0" rotation="0 35 0">
+            <a-camera>
+<!--                <a-cursor material="color:#000000"></a-cursor>-->
+                   <a-entity cursor position="0 0 -1" geometry="primitive: sphere; radius: 0.015" material="color:#000; shader:flat; opacity:0.5"></a-entity>
+            </a-camera>
+        </a-entity>
+
+        
+         <!--PLANO Y SKY-->
+        <a-sky material="src:#pared3;repeat:6 25 0" rotation="0 -80 0" radius="35" ></a-sky>
+        <a-plane position="0 0 0" rotation="-90 0 0" scale="1000 1000 1" 
+                    material="src:#piso4;repeat:100 100 1; shader:flat;">
+        </a-plane>
+        
+        <!--¿QUÉ ES LA VIOLENCIA DIGITAL-->
+          <!--VIDEO-->
+          <a-video src="#pionero" width="16" height="9" position="-15 10 -15" rotation="0 35 0">
+			<!-- Play/Pause -->
+			<a-image id="videoControls" src="#play" position="0 -6.5 -5" rotation="0 0 0" scale="7 7 1" play-pause></a-image>
+		</a-video>
+          <!--<a-text position="-8 13 -9" color="white" rotation="0 35 0" scale="5 5 0" align="center" font="mozillavr"
+               value="¿Que es la violencia digital?">
+          </a-text>-->
+            <a-image src="#titulo" position="-15 16 -15" rotation="0 37 0" scale="12 9 0"></a-image>
+         <!-- <a-text position="-8 11.5 -9" color="white" rotation="0 35 0" scale="3 3 0" align="center" font="mozillavr"
+               value="Da clic en play para visualizar el video">
+           </a-text>-->
+          
+        <!--VIOLENTOMETRO VIRTUAL-->
+          <!--BOTON PARA VIOLENTOMETRO-->
+        <!--  <a-box id="btn_viol" position="3 3.7 -12" rotation="0 0 0" depth="1" width="2" color="#4CC3D9" 
+                 event-set__appa="_event:click;_target:#violentometro; visible:true;">
+          </a-box>-->
+          <a-image id="btn_viol2" src="#btnViolentometro" position="7 4 -17" rotation="0 0 0" scale="6 6 1"
+                   event-set__appa="_event:click;_target:#violentometro; visible:true;"
+          ></a-image>
+          <!--VIOLENTOMETRO 3D-->
+          <a-entity id="violentometro" visible="false" repeat="0"
+                  event-set__appa="_event:click;_target:#violentometro;visible:false;">
+               <a-entity gltf-model="#viol" position="2 5.4 -9" rotation="-1 0 0" scale="0.5 0.5 0.5" animation-mixer 
+                        >
+               </a-entity>
+               <a-entity gltf-model="#text" position="5 5.4 -9" rotation="0 0 0" scale="0.5 0.5 0.5" animation-mixer>
+               </a-entity>
+          </a-entity>
+         
+          <a-text position="6 14 -12" color="white" rotation="-0.012605071492878112 -0.6795279450251563 1.6707449306014805" scale="5 5 0" align="center" font="mozillavr"
+               value="VIOLENTOMETRO VIRTUAL">
+          </a-text>
+          
+        
+          
+        <!--INFOGRAFRIAS VICTIMA, VICTIMARIO, AGRESOR-->
+          <!--TITULO-->
+           <a-text position="12 11.5 -1" color="white" rotation="0 -90 0" scale="5 5 0" align="center" font="mozillavr"
+               value="INFOGRAFIAS">
+           </a-text>
+          <!--BOTÓN VICTIMA-->
+           <a-image id="vict" src="#victima" scale="7.2 8 1" position="6.5 5 -1" rotation="0 -90 0"
+                    visible="false"
+                    event-set__apa="_event:click;_target:#vict;visible:false;position: 12 5 -1;">
+           </a-image>
+           <a-image id="btn_victima" src="#btnVictima" position="12 7.5 -8" scale="4 4 1" rotation="0 -90 0"
+                  event-set__appa="_event:click;_target:#vict;visible:true;position: 8 5 -1;">
+           </a-image>
+           <!--<a-box id="btn_victima" position="12 10 -1" rotation="0 90 0" depth="1" width="4" color="#4ff8D9"
+                  event-set__appa="_event:click;_target:#vict;visible:true;position: 8 5 -1;">
+           </a-box>-->
+          
+          <!--BOTON COMPLICE-->
+           <a-image src="#complice" scale="7.2 8 1" position="8 5 -1" rotation="0 -90 0"
+                   id="comp" visible="false"
+                   event-set__appa="_event:click;_target:#comp;visible:false;position: 12 5 -1;"           
+           ></a-image>
+           <a-image id="btn_complice" src="#btnComplice" position="12 7.5 -2" scale="4 4 1" rotation="0 -90 0"
+                  event-set__appa="_event:click;_target:#comp;visible:true;position: 8 5 -1;">
+           </a-image>
+           <!-- <a-box id="btn_complice" position="12 8 -1" rotation="0 90 0" depth="1" width="4" color="#4DD8FF"
+                event-set__mouseenter="scale: 1.2 1.2 1"
+              event-set__mouseleave="scale: 1 1 1"
+                 event-set__appa="_event:click;_target:#victi;visible:true;">
+           </a-box>-->
+          
+          <!--BOTON AGRESOR-->
+           <a-image src="#agresor" scale="7.2 8 1" position="8 5 -1" rotation="0 -90 0"
+                   id="agre" visible="false"
+                   event-set__appa="_event:click;_target:#agre;visible:false;position: 12 5 -1;"           
+           ></a-image>
+           <a-image id="btn_agresor" src="#btnAgresor" position="12 7.5 3.5" scale="4 4 1" rotation="0 -90 0"
+                  event-set__appa="_event:click;_target:#agre;visible:true;position: 8 5 -1;">
+           </a-image>
+           <!--          <a-box id="btn_agresor" position="12 6 -1" rotation="0 90 0" depth="1" width="4" color="#5aff00"
+                 event-set__appa="_event:click;_target:#agre;visible:true;">
+          </a-box>-->
+          
+        <!--TIPS PARA PREVENIR LA VIOLENCIA DIGITAL-->
+          <!--TITULO-->
+           <a-text position="5 14 12" color="white" rotation="0 -165 0" scale="5 5 0" align="center" font="mozillavr"
+               value="¿Cómo prevenir la 
+               violencia digital?">
+           </a-text>
+           <a-image id="auto-cuidado" src="#autocuidado" position="5 9 12" rotation="0 -165 0" scale="8 6 1"
+                    event-set__mover="_event:click;position:5 9 12;"
+           ></a-image>
+           <a-image id="btn-tips" src="#btnTips" position="5 5 12" rotation="0 -165 0" scale="4 4 1"
+                    event-set__mover="_event:click;_target:#auto-cuidado;position:5 9 8;scale:10 5 1;"
+           ></a-image>
+          
+          
+          
+          
+         
+          
+          
+          
+          
+  
+        
+        
+        
+        
+     
+<!--
+       
+       <a-camera camera="" position="0.12906 -0.27965 3.16436" rotation="24.337528263771976 0.09740282517223994 0.4520637003582195" look-controls="" wasd-controls="" data-aframe-inspector-original-camera=""></a-camera>
+        material="src:#pared3;repeat:6 25 0"
+        
+        <a-camera camera="" position="0 1.6 -1.80322" rotation="47.54804854452163 0.6067623050435418 0.2412152317500766" look-controls="" wasd-controls="" data-aframe-inspector-original-camera=""></a-camera>
+        
+        
+        eventos para boto violentometro
+        event-set__appa="_event:click;_target:#viole; visible:true;"
+                 event-set__appa="_event:click;_target:#text; visible:true;"
+                 
+                 
+                  event-set__appa="_event:click;_target:#vict;visible:true;
+
+       
+       
+       
+ <a-assets>
+        	<img id="play" src="imagen/play.png">
+        	<img id="pause" src="imagen/pause.png">
+        	<video id="pionero" src="video/pionero.mp4" loop="true"></video>
+        </a-assets>
+
+        -->
+
+      
+    </a-scene>
+  </body>
+</html>
